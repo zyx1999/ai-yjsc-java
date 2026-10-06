@@ -1,0 +1,179 @@
+{
+  "investigation.ai_summary": {
+    "type": "object",
+    "properties": {
+      "items": {
+        "type": "array",
+        "minItems": 4,
+        "maxItems": 4,
+        "items": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "enum": [
+                "A01",
+                "A02",
+                "A03",
+                "A04"
+              ]
+            },
+            "text": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 500
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "code",
+            "text",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "items"
+    ],
+    "additionalProperties": false
+  },
+  "financial_report.analyze": {
+    "type": "object",
+    "properties": {
+      "text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 8000
+      },
+      "evidence_refs": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      }
+    },
+    "required": [
+      "text",
+      "evidence_refs"
+    ],
+    "additionalProperties": false
+  },
+  "financial_report.extract": {
+    "type": "object",
+    "properties": {
+      "subject_match": {
+        "enum": [
+          "MATCHED",
+          "MISMATCH",
+          "UNKNOWN"
+        ]
+      },
+      "candidates": {
+        "type": "array",
+        "maxItems": 300,
+        "items": {
+          "$ref": "#/$defs/FinancialItem"
+        }
+      },
+      "limitations": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "maxItems": 50
+      }
+    },
+    "required": [
+      "subject_match",
+      "candidates",
+      "limitations"
+    ],
+    "additionalProperties": false
+  },
+  "enterprise_credit.extract": {
+    "type": "object",
+    "properties": {
+      "subject_match": {
+        "enum": [
+          "MATCHED",
+          "MISMATCH",
+          "UNKNOWN"
+        ]
+      },
+      "records": {
+        "type": "array",
+        "maxItems": 300,
+        "items": {
+          "type": "object",
+          "properties": {
+            "institution": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 1000
+            },
+            "account": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 1000
+            },
+            "currency": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 1000
+            },
+            "balance": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 1000
+            },
+            "as_of": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 1000
+            }
+          },
+          "required": [
+            "institution",
+            "account",
+            "currency",
+            "balance",
+            "as_of"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "evidence_refs": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      }
+    },
+    "required": [
+      "subject_match",
+      "records",
+      "evidence_refs"
+    ],
+    "additionalProperties": false
+  }
+}

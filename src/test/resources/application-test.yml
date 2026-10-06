@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    # 必须指定隔离测试库，不继承开发/业务库的 DB_* 连接。
+    url: ${TEST_DB_URL:}
+    username: ${TEST_DB_USERNAME:}
+    password: ${TEST_DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    initialization-mode: always
+    schema: classpath:db/diligence.sql
+
+diligence:
+  jobs:
+    enabled: false
+  source:
+    adapter: demo
+  security:
+    dev-user: test-user
+  files:
+    root: target/framework-files
+  demo:
+    seed-session: false

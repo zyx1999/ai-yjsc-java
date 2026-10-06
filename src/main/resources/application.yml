@@ -1,0 +1,55 @@
+server:
+  port: 18080
+  servlet:
+    context-path: ''
+spring:
+  profiles:
+    active: local
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 11MB
+  datasource:
+    # MySQL；在对应环境的配置文件中填写连接地址、用户名和密码。
+    url: 'jdbc:mysql://rm-bp1mob28eb4knb6zi9o.mysql.rds.aliyuncs.com:3306/yuerong?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai'
+    username: 'dbuser'
+    # 密码不写入源码；由外部配置或 SPRING_DATASOURCE_PASSWORD 提供。
+    password: 'pass2025*'
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    initialization-mode: never
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 10000
+      validation-timeout: 3000
+diligence:
+  source:
+    adapter: mysql
+    # 当前数据库业务表映射；迁移环境时可换成该环境的映射文件路径。
+    mapping: classpath:adapter/source/mysql/mapping.yuerong.json
+  platform:
+    adapter: agent-service
+    url: http://127.0.0.1:18784/api/v1/message
+    # 行内文件接口根；留空时由 diligence.platform.url 的 /message 推导为 /files（见 10 号自主编排指南）。
+    files-url: ''
+    headers-json: '{}'
+    namespace: v2
+    timeout-ms: 600000
+    # 平台 debugTrace；后端只记 SSE 元数据。业务诊断日志不依赖此开关。
+    debug-trace: true
+  model:
+    # url 保留调查表完整API；document-base-url 填财报/征信专属基础地址，不含/chatabc后缀。
+    url: http://127.0.0.1:18784/chatabc/use_as_tool
+    headers-json: '{}'
+    document-base-url: http://127.0.0.1:18784
+    timeout-ms: 600000
+  jobs:
+    enabled: true
+  security:
+    dev-user: ''
+    trusted-user-header: false
+  files:
+    root: ./storage/diligence
+logging:
+  level:
+    com.yuerong.diligence.diagnostics: INFO

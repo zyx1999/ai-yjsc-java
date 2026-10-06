@@ -1,0 +1,153 @@
+{
+  "enterprise_sql": null,
+  "enterprise_search_sql": null,
+  "groups": [
+    {
+      "group_key": "source.1",
+      "title": "企业基本信息",
+      "dimension": "PROFILE",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.2",
+      "title": "企业股东",
+      "dimension": "PROFILE",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.3",
+      "title": "关联企业",
+      "dimension": "PROFILE",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.4",
+      "title": "工商信息变更情况",
+      "dimension": "PROFILE",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.5",
+      "title": "股权出质情况",
+      "dimension": "PROFILE",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.6",
+      "title": "企业融资情况",
+      "dimension": "CREDIT",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.7",
+      "title": "企业对外担保情况",
+      "dimension": "CREDIT",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.8",
+      "title": "涉诉情况",
+      "dimension": "LEGAL",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.9",
+      "title": "环保处罚情况",
+      "dimension": "LEGAL",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.10",
+      "title": "黑名单信息",
+      "dimension": "LEGAL",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.11",
+      "title": "行政处罚信息",
+      "dimension": "LEGAL",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.12",
+      "title": "燃气费",
+      "dimension": "OPERATIONS",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.13",
+      "title": "纳税信息",
+      "dimension": "OPERATIONS",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.14",
+      "title": "海关信息",
+      "dimension": "OPERATIONS",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.15",
+      "title": "特殊经营许可证",
+      "dimension": "OPERATIONS",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.16",
+      "title": "财务报表",
+      "dimension": "FINANCIALS",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.17",
+      "title": "结算情况",
+      "dimension": "BANKING",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.18",
+      "title": "代发工资情况",
+      "dimension": "BANKING",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.19",
+      "title": "产品购买",
+      "dimension": "BANKING",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.20",
+      "title": "企业持有知识产权信息",
+      "dimension": "IP",
+      "sql": null,
+      "fields": []
+    },
+    {
+      "group_key": "source.21",
+      "title": "在我行授用信情况",
+      "dimension": "CREDIT",
+      "sql": null,
+      "fields": []
+    }
+  ]
+}

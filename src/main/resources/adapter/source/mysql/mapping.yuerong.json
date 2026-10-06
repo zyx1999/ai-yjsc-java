@@ -1,0 +1,1988 @@
+{
+  "enterprise_sql": "SELECT UNIT_SOCL_CR_CD AS credit_code, CN_NAM AS enterprise_name FROM `m_gud_mid_yer_phdc_corp_basic_sj` WHERE UNIT_SOCL_CR_CD=:credit_code",
+  "enterprise_search_sql": "SELECT UNIT_SOCL_CR_CD AS credit_code, CN_NAM AS enterprise_name FROM `m_gud_mid_yer_phdc_corp_basic_sj` WHERE CN_NAM LIKE :enterprise_name_pattern ORDER BY UNIT_SOCL_CR_CD LIMIT 11",
+  "groups": [
+    {
+      "group_key": "source.1",
+      "title": "企业基本信息",
+      "dimension": "PROFILE",
+      "sql": "SELECT s.UNIT_SOCL_CR_CD AS record_id, s.CN_NAM AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_yer_phdc_corp_basic_sj` s WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.1.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "CUST_NO",
+          "field_key": "source.1.cust_no",
+          "label": "客户号",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "ADMI_STS_NAM",
+          "field_key": "source.1.admi_sts_nam",
+          "label": "经营状态",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "CORP_ECO_TYP_CD",
+          "field_key": "source.1.corp_eco_typ_cd",
+          "label": "企业类型",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "REG_OR_APVL_CRT_DAT",
+          "field_key": "source.1.reg_or_apvl_crt_dat",
+          "label": "成立年限",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "RUN_LAST_YEAR",
+          "field_key": "source.1.run_last_year",
+          "label": "持续经营年限",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "BUSINESS_MAIN_FINO",
+          "field_key": "source.1.business_main_fino",
+          "label": "客户经理:主营业务",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "CORP_CUST_REG_ADDR",
+          "field_key": "source.1.corp_cust_reg_addr",
+          "label": "注册地址",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "ACTUALLY_ADDR",
+          "field_key": "source.1.actually_addr",
+          "label": "客户经理:实际经营地址",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "REG_CAP_AMT",
+          "field_key": "source.1.reg_cap_amt",
+          "label": "注册资本",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "ACT_RECV_CAP_AMT",
+          "field_key": "source.1.act_recv_cap_amt",
+          "label": "实缴资本",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "CORP_SIZE",
+          "field_key": "source.1.corp_size",
+          "label": "客户经理:企业规模",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "CCS_LVL",
+          "field_key": "source.1.ccs_lvl",
+          "label": "CCS等级",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "ACCT_TYPE",
+          "field_key": "source.1.acct_type",
+          "label": "在我行开户类型",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "NSTD_OCPCLS",
+          "field_key": "source.1.nstd_ocpcls",
+          "label": "客户经理:国标行业",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "LGL_SUPI_NAM",
+          "field_key": "source.1.lgl_supi_nam",
+          "label": "法定代表人名称",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "MRGE_STS",
+          "field_key": "source.1.mrge_sts",
+          "label": "法定代表人婚姻状况",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "NATIVE_PLACE",
+          "field_key": "source.1.native_place",
+          "label": "客户经理:籍贯",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "OWN_BORN_DATE",
+          "field_key": "source.1.own_born_date",
+          "label": "出生年月",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "REAL_CTRL_PSN",
+          "field_key": "source.1.real_ctrl_psn",
+          "label": "客户经理:实际控制人",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "FINAL_GRD_CD",
+          "field_key": "source.1.final_grd_cd",
+          "label": "在我行评级(评分)",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "HJHSHFXFL",
+          "field_key": "source.1.hjhshfxfl",
+          "label": "客户经理:环境和社会风险分类",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "IF_WFXW",
+          "field_key": "source.1.if_wfxw",
+          "label": "客户经理:是否参与民间借贷、高利贷融资、非法集资等违法行为",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "IF_SHSD",
+          "field_key": "source.1.if_shsd",
+          "label": "客户经理:是否涉黑、赌、毒等不良嗜好",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "CORP_ICCS_CHK",
+          "field_key": "source.1.corp_iccs_chk",
+          "label": "客户经理:企业和企业主ICCS关联查询",
+          "value_type": "TEXT"
+        }
+      ],
+      "limitations": [
+        "部分金额币种或单位未在表结构中定义，保持原值，不作跨口径计算",
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.2",
+      "title": "企业股东",
+      "dimension": "PROFILE",
+      "sql": "SELECT CAST(s.SER_NO AS CHAR) AS record_id, COALESCE(NULLIF(s.CN_NAM,''),b.CN_NAM) AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_yer_phdc_corp_shareholder_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.2.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "SHAREHOLDER_NAME",
+          "field_key": "source.2.shareholder_name",
+          "label": "股东名称",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "SHAREHOLDER_TYPE",
+          "field_key": "source.2.shareholder_type",
+          "label": "股东类型",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "SHAREHOLDER_PERCENT",
+          "field_key": "source.2.shareholder_percent",
+          "label": "持股比例",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "SUBSCRIBED_CAPITAL",
+          "field_key": "source.2.subscribed_capital",
+          "label": "认缴出资",
+          "value_type": "TEXT"
+        }
+      ],
+      "limitations": [
+        "源表无历史股东标志，比例尺度及出资金额单位待核实；不据此认定当前股东全量",
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.3",
+      "title": "关联企业",
+      "dimension": "PROFILE",
+      "sql": null,
+      "fields": [],
+      "limitations": [
+        "当前库未配置关联企业来源"
+      ]
+    },
+    {
+      "group_key": "source.4",
+      "title": "工商信息变更情况",
+      "dimension": "PROFILE",
+      "sql": "SELECT CAST(s.SER_NO AS CHAR) AS record_id, COALESCE(NULLIF(s.CN_NAM,''),b.CN_NAM) AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_yer_phdc_corp_alter_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.4.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "ALTITEM_TYPE",
+          "field_key": "source.4.change_type",
+          "label": "变更事项",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "ALTDATE",
+          "field_key": "source.4.change_date",
+          "label": "变更日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "ALTBE",
+          "field_key": "source.4.before_content",
+          "label": "变更前",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "ALTAF",
+          "field_key": "source.4.after_content",
+          "label": "变更后",
+          "value_type": "TEXT"
+        }
+      ],
+      "limitations": [
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.5",
+      "title": "股权出质情况",
+      "dimension": "PROFILE",
+      "sql": "SELECT CAST(s.SER_NO AS CHAR) AS record_id, COALESCE(NULLIF(s.CN_NAM,''),b.CN_NAM) AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_yer_phdc_corp_equity_pledge_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.5.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "REGISTER_NO",
+          "field_key": "source.5.register_no",
+          "label": "企业股权出质登记编号",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "PLED_GOR",
+          "field_key": "source.5.pledgor",
+          "label": "出质人",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "PLED_AMOUNT",
+          "field_key": "source.5.pledgor_amount",
+          "label": "出质股权数额",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "PLEDGEE",
+          "field_key": "source.5.pledgee",
+          "label": "质权人",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "PLED_DATE",
+          "field_key": "source.5.pled_date",
+          "label": "企业股权出质设立登记日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "STATUS",
+          "field_key": "source.5.status_code",
+          "label": "登记状态",
+          "value_type": "TEXT"
+        }
+      ],
+      "limitations": [
+        "部分金额币种或单位未在表结构中定义，保持原值，不作跨口径计算",
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.6",
+      "title": "企业融资情况",
+      "dimension": "CREDIT",
+      "sql": null,
+      "fields": [],
+      "limitations": [
+        "当前库未提供完整融资逐笔来源；我行授用信另列展示"
+      ]
+    },
+    {
+      "group_key": "source.7",
+      "title": "企业对外担保情况",
+      "dimension": "CREDIT",
+      "sql": "SELECT CAST(s.SER_NO AS CHAR) AS record_id, b.CN_NAM AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_corp_gx_guarantee_dtal_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.7.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "BUS_REG_NO",
+          "field_key": "source.7.bus_reg_no",
+          "label": "工商注册号",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "GUARANTORED_ENAME",
+          "field_key": "source.7.guarantored_ename",
+          "label": "担保方_公司名称",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "GUARANTEE_END_DT",
+          "field_key": "source.7.guarantee_end_dt",
+          "label": "担保终止日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "GUARANTEE_AMT",
+          "field_key": "source.7.guarantee_amt",
+          "label": "担保金额",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "GUARANTEE_MODE",
+          "field_key": "source.7.guarantee_mode",
+          "label": "担保方式",
+          "value_type": "TEXT"
+        }
+      ],
+      "limitations": [
+        "部分金额币种或单位未在表结构中定义，保持原值，不作跨口径计算",
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.8",
+      "title": "涉诉情况",
+      "dimension": "LEGAL",
+      "sql": "SELECT CAST(s.SER_NO AS CHAR) AS record_id, COALESCE(NULLIF(s.CN_NAM,''),b.CN_NAM) AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_corp_gx_punishbreak_h_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.8.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "ENTID_CHND",
+          "field_key": "source.8.entid_chnd",
+          "label": "中数企业id",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "RELID_GX",
+          "field_key": "source.8.relid_gx",
+          "label": "国信关系id",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "ROLE",
+          "field_key": "source.8.role",
+          "label": "被执行角色",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "CASE_NO",
+          "field_key": "source.8.case_no",
+          "label": "案件编号",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "CASE_TYPE",
+          "field_key": "source.8.case_type",
+          "label": "案件类型",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "JUDGE_DATE",
+          "field_key": "source.8.judge_date",
+          "label": "判决日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "FLAG_LAW_PUNISH",
+          "field_key": "source.8.flag_law_punish",
+          "label": "是否立案被执行",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "PERFORMED_AMOUNT",
+          "field_key": "source.8.performed_amount",
+          "label": "已履行金额",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "UNPERFORM_AMOUNT",
+          "field_key": "source.8.unperform_amount",
+          "label": "未履行金额",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "DISHONEST_DESC",
+          "field_key": "source.8.dishonest_desc",
+          "label": "失信被执行人行为具体情形",
+          "value_type": "TEXT"
+        }
+      ],
+      "limitations": [
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.9",
+      "title": "环保处罚情况",
+      "dimension": "LEGAL",
+      "sql": "SELECT CAST(s.SER_NO AS CHAR) AS record_id, COALESCE(NULLIF(s.CN_NAM,''),b.CN_NAM) AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_corp_gx_envir_punish_dtal_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.9.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "ILLEG_TYPE",
+          "field_key": "source.9.illeg_type",
+          "label": "违法类型",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "PUNISH_TYPE",
+          "field_key": "source.9.punish_type",
+          "label": "处罚结果",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "PUNISH_START_DATE",
+          "field_key": "source.9.punish_start_date",
+          "label": "处罚生效期",
+          "value_type": "TEXT"
+        }
+      ],
+      "limitations": [
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.10",
+      "title": "黑名单信息",
+      "dimension": "LEGAL",
+      "sql": null,
+      "fields": [],
+      "limitations": [
+        "当前库未配置黑名单来源"
+      ]
+    },
+    {
+      "group_key": "source.11",
+      "title": "行政处罚信息",
+      "dimension": "LEGAL",
+      "sql": "SELECT CAST(s.SER_NO AS CHAR) AS record_id, COALESCE(NULLIF(s.CN_NAM,''),b.CN_NAM) AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_corp_gx_eadmin_punish_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.11.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "PUNISH_NO",
+          "field_key": "source.11.punish_no",
+          "label": "处罚决定书文号",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "ILLEGAL_TYPE",
+          "field_key": "source.11.illegal_type",
+          "label": "违法类型",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "PUNISH_CONTENT",
+          "field_key": "source.11.punish_content",
+          "label": "处罚内容",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "PUNISH_AMOUNT",
+          "field_key": "source.11.punish_amount",
+          "label": "罚款金额（万元）",
+          "value_type": "TEXT",
+          "context": {
+            "unit": "TEN_THOUSAND"
+          }
+        },
+        {
+          "column": "CONFISCATE_ILLEGAL_GAINS_AMOUNT",
+          "field_key": "source.11.confiscate_illegal_gains_amount",
+          "label": "没收违法所得金额（万元）",
+          "value_type": "TEXT",
+          "context": {
+            "unit": "TEN_THOUSAND"
+          }
+        },
+        {
+          "column": "LICENSE_INFO",
+          "field_key": "source.11.license_info",
+          "label": "暂扣或吊销证照名称及编号",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "PUNISH_START_DATE",
+          "field_key": "source.11.punish_start_date",
+          "label": "处罚生效期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "PUNISH_END_DATE",
+          "field_key": "source.11.punish_end_date",
+          "label": "处罚截止期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "DEPARTMENT",
+          "field_key": "source.11.department",
+          "label": "处罚机关名称",
+          "value_type": "TEXT"
+        }
+      ],
+      "limitations": [
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.12",
+      "title": "燃气费",
+      "dimension": "OPERATIONS",
+      "sql": null,
+      "fields": [],
+      "limitations": [
+        "当前库未配置燃气费来源"
+      ]
+    },
+    {
+      "group_key": "source.13",
+      "title": "纳税信息",
+      "dimension": "OPERATIONS",
+      "sql": "SELECT CAST(s.SER_NO AS CHAR) AS record_id, COALESCE(NULLIF(s.CN_NAM,''),b.CN_NAM) AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_corp_gx_tax_info_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.13.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "TAXPAYER_STATUS",
+          "field_key": "source.13.taxpayer_status",
+          "label": "是否纳税非正常户",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "FLAG_TAX_OWING",
+          "field_key": "source.13.flag_tax_owing",
+          "label": "是否欠税标识（1:是；0:否）",
+          "value_type": "TEXT"
+        }
+      ],
+      "limitations": [
+        "本表仅纳税非正常户及欠税标识，无年度纳税信用等级",
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.14",
+      "title": "海关信息",
+      "dimension": "OPERATIONS",
+      "sql": "SELECT CAST(s.SER_NO AS CHAR) AS record_id, COALESCE(NULLIF(s.CN_NAM,''),b.CN_NAM) AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_yer_phdc_corp_customs_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.14.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "CUSTOMS_BUSINESS_TYPE",
+          "field_key": "source.14.customs_business_type",
+          "label": "经营类别",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "CUSTOMS_CANCEL_FLAG",
+          "field_key": "source.14.customs_cancel_flag",
+          "label": "海关注销标志",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "CREDIT_LEVEL",
+          "field_key": "source.14.credit_level",
+          "label": "信用等级",
+          "value_type": "TEXT"
+        }
+      ],
+      "limitations": [
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.15",
+      "title": "特殊经营许可证",
+      "dimension": "OPERATIONS",
+      "sql": "SELECT CAST(s.SER_NO AS CHAR) AS record_id, COALESCE(NULLIF(s.CN_NAM,''),b.CN_NAM) AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_yer_phdc_corp_cert_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.15.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "LIC_NUM",
+          "field_key": "source.15.lic_num",
+          "label": "证书编号",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "LIC_NAME",
+          "field_key": "source.15.lic_name",
+          "label": "证书名称",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "START_DATE",
+          "field_key": "source.15.start_date",
+          "label": "发证日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "END_DATE",
+          "field_key": "source.15.end_date",
+          "label": "发证有效期至",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "LIC_STATE",
+          "field_key": "source.15.lic_state",
+          "label": "证书状态",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "WEB_URL",
+          "field_key": "source.15.web_url",
+          "label": "数据来源链接",
+          "value_type": "TEXT"
+        }
+      ],
+      "limitations": [
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.16",
+      "title": "财务报表",
+      "dimension": "FINANCIALS",
+      "sql": "SELECT CONCAT(s.UNIT_SOCL_CR_CD,':',s.RPT_YEAR,':',s.RPT_MONTH) AS record_id, COALESCE(NULLIF(s.CN_NAM,''),b.CN_NAM) AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date, DATE_FORMAT(LAST_DAY(STR_TO_DATE(CONCAT(s.RPT_YEAR,'-',LPAD(s.RPT_MONTH,2,'0'),'-01'),'%Y-%m-%d')),'%Y-%m-%dT00:00:00+08:00') AS report_end FROM `m_gud_mid_yer_phdc_corp_temt_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.16.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "CUST_NO",
+          "field_key": "source.16.cust_no",
+          "label": "客户号",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "RPT_YEAR",
+          "field_key": "source.16.rpt_year",
+          "label": "财报年份",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "RPT_MONTH",
+          "field_key": "source.16.rpt_month",
+          "label": "财报月份",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "AST_SUM",
+          "field_key": "financial.f109",
+          "label": "总资产",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "LQDY_AST_SUM",
+          "field_key": "financial.f110",
+          "label": "流动资产",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "CCY_FUD",
+          "field_key": "financial.f111",
+          "label": "货币资金",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "EXCG_FNCL_AST",
+          "field_key": "financial.f112",
+          "label": "交易性金融资产",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "REV_NOTE",
+          "field_key": "financial.f113",
+          "label": "应收票据",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "RECVS",
+          "field_key": "financial.f114",
+          "label": "应收账款",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "PLAN_FUD_ACCT",
+          "field_key": "financial.f115",
+          "label": "预付款项",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "OTH_RECVS",
+          "field_key": "financial.f116",
+          "label": "其他应收款",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "INVT",
+          "field_key": "financial.f117",
+          "label": "存货",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "LQ_YEAR_MATU_AST",
+          "field_key": "financial.f118",
+          "label": "一年内到期的非流动资产",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "OTH_LQDY_AST",
+          "field_key": "financial.f119",
+          "label": "其他流动资产",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "NON_LQDY_AST_SUM",
+          "field_key": "financial.f120",
+          "label": "非流动资产",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "AVL_SALE_FNCL_AST",
+          "field_key": "financial.f121",
+          "label": "可供出售金融资产",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "OWN_MATU_IVST",
+          "field_key": "financial.f122",
+          "label": "持有至到期投资",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "LNG_RECVS",
+          "field_key": "financial.f123",
+          "label": "长期应收款",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "LNG_STK_EQU_IVST",
+          "field_key": "financial.f124",
+          "label": "长期股权投资",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "IVST_RLEST",
+          "field_key": "financial.f125",
+          "label": "投资性房地产",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "FIX_AST_SUM",
+          "field_key": "financial.f126",
+          "label": "固定资产",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "UD_CONSTN",
+          "field_key": "financial.f127",
+          "label": "在建工程",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "PROD_GODS_AST",
+          "field_key": "financial.f128",
+          "label": "生产性生物资产",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "GAS_AST",
+          "field_key": "financial.f129",
+          "label": "油气资产",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "INVI_AST",
+          "field_key": "financial.f130",
+          "label": "无形资产",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "DVLP_DISB",
+          "field_key": "financial.f131",
+          "label": "开发支出",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "DLER_FITCH",
+          "field_key": "financial.f132",
+          "label": "商誉",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "LNG_TBA_FEE_DLAY_AST",
+          "field_key": "financial.f133",
+          "label": "长期待摊费用",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "DLAY_INCTX_AST",
+          "field_key": "financial.f134",
+          "label": "递延所得税资产",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "OTH_NON_LQDY_AST",
+          "field_key": "financial.f135",
+          "label": "其他非流动资产",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "DPS_SUM",
+          "field_key": "financial.f136",
+          "label": "总负债",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "LQDY_DPS_SUM",
+          "field_key": "financial.f137",
+          "label": "流动负债",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "SHT_LN",
+          "field_key": "financial.f138",
+          "label": "短期借款",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "EXCG_FNCL_DPS",
+          "field_key": "financial.f139",
+          "label": "交易性金融负债",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "SHD_PAY_NOTE",
+          "field_key": "financial.f140",
+          "label": "应付票据",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "PAYS",
+          "field_key": "financial.f141",
+          "label": "应付账款",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "RESV_FUD_ACCT",
+          "field_key": "financial.f142",
+          "label": "预收款项",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "SHD_PAY_STAF_SLRY",
+          "field_key": "financial.f143",
+          "label": "应付职工薪酬",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "SHD_SETL_TAX",
+          "field_key": "financial.f144",
+          "label": "应交税费",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "OTH_SHD_PAY_FUD",
+          "field_key": "financial.f145",
+          "label": "其他应付款",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "LQ_YEAR_MATU_DPS",
+          "field_key": "financial.f146",
+          "label": "一年内到期的非流动负债",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "OTH_LQDY_DPS",
+          "field_key": "financial.f147",
+          "label": "其他流动负债",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "NON_LQDY_DPS_SUM",
+          "field_key": "financial.f148",
+          "label": "非流动负债",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "LNG_LN",
+          "field_key": "financial.f149",
+          "label": "长期借款",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "SHD_PAY_BOND",
+          "field_key": "financial.f150",
+          "label": "应付债券",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "LNG_PAYS",
+          "field_key": "financial.f151",
+          "label": "长期应付款",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "PLAN_DPS",
+          "field_key": "financial.f152",
+          "label": "预计负债",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "DLAY_INCTX_DPS",
+          "field_key": "financial.f153",
+          "label": "递延所得税负债",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "OTH_NON_LQDY_DPS",
+          "field_key": "financial.f154",
+          "label": "其他非流动负债",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "OWN_EQU_SUM",
+          "field_key": "financial.f155",
+          "label": "所有者权益（或股东权益）:",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "ACT_RECV_CAP_STOCK",
+          "field_key": "financial.f156",
+          "label": "实收资本（或股本）",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "CAP_ACCM",
+          "field_key": "financial.f157",
+          "label": "资本公积",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "SPLS_ACCM",
+          "field_key": "financial.f158",
+          "label": "盈余公积",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "NON_ALLO_PFT",
+          "field_key": "financial.f159",
+          "label": "未分配利润",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "PRMY_BINCM",
+          "field_key": "financial.f160",
+          "label": "营业收入",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "PRMY_BUS_CST",
+          "field_key": "financial.f161",
+          "label": "营业成本",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "SALE_FEE",
+          "field_key": "financial.f162",
+          "label": "销售费用",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "SUPI_FEE",
+          "field_key": "financial.f163",
+          "label": "管理费用",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "FNC_FEE",
+          "field_key": "financial.f164",
+          "label": "财务费用",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "IVST_PFT_RECP_CSH",
+          "field_key": "financial.f165",
+          "label": "投资收益",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "DPSE_FIX_INVI_OTH_AST_CSH",
+          "field_key": "financial.f166",
+          "label": "资产处置收益",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "BUS_PFT",
+          "field_key": "financial.f167",
+          "label": "营业利润",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "BIZ_OUT_INC_AMT",
+          "field_key": "source.16.biz_out_inc_amt",
+          "label": "营业外收入",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "BIZ_OUT_EXPEND_AMT",
+          "field_key": "source.16.biz_out_expend_amt",
+          "label": "营业外支出",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "NET_PFT",
+          "field_key": "financial.f170",
+          "label": "净利润",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "NET_VAL_CSH_FLOW",
+          "field_key": "financial.f171",
+          "label": "现金净流量",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "ADMI_CSH_NET_VAL",
+          "field_key": "financial.f172",
+          "label": "经营性现金净流量",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "IVST_CSH_NET_VAL",
+          "field_key": "financial.f173",
+          "label": "投资性现金净流量",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        },
+        {
+          "column": "PREP_CSH_NET_VAL",
+          "field_key": "financial.f174",
+          "label": "筹资性现金净流量",
+          "value_type": "DECIMAL",
+          "context": {
+            "scope": "UNKNOWN"
+          },
+          "context_columns": {
+            "as_of": "report_end"
+          }
+        }
+      ],
+      "limitations": [
+        "部分金额币种或单位未在表结构中定义，保持原值，不作跨口径计算",
+        "财报年月作为报表时点；累计/月度期间、合并/母公司口径及币种单位尚未明确，禁止自动同口径写回",
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.17",
+      "title": "结算情况",
+      "dimension": "BANKING",
+      "sql": "SELECT CAST(s.SER_NO AS CHAR) AS record_id, COALESCE(NULLIF(s.CN_NAM,''),b.CN_NAM) AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_corp_tr_sum_info_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.17.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "CUST_NO",
+          "field_key": "source.17.cust_no",
+          "label": "对公客户号",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "SETTLE_AMT_HYEAR",
+          "field_key": "source.17.settle_amt_hyear",
+          "label": "企业近6个月结算量（万元）",
+          "value_type": "DECIMAL",
+          "context": {
+            "unit": "TEN_THOUSAND"
+          }
+        },
+        {
+          "column": "YEAR_AVRG_RMB_AMT",
+          "field_key": "source.17.year_avrg_rmb_amt",
+          "label": "企业年日均存款余额（万元）",
+          "value_type": "DECIMAL",
+          "context": {
+            "unit": "TEN_THOUSAND"
+          }
+        },
+        {
+          "column": "LEG_SETTLE_AMT_HYEAR",
+          "field_key": "source.17.leg_settle_amt_hyear",
+          "label": "企业主近6个月结算量（万元）",
+          "value_type": "DECIMAL",
+          "context": {
+            "unit": "TEN_THOUSAND"
+          }
+        },
+        {
+          "column": "LEG_AUM_BAL_YAVER",
+          "field_key": "source.17.leg_aum_bal_yaver",
+          "label": "企业主年日均AUM（万元）",
+          "value_type": "DECIMAL",
+          "context": {
+            "unit": "TEN_THOUSAND"
+          }
+        }
+      ],
+      "limitations": [
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.18",
+      "title": "代发工资情况",
+      "dimension": "BANKING",
+      "sql": "SELECT CAST(s.SER_NO AS CHAR) AS record_id, COALESCE(NULLIF(s.CN_NAM,''),b.CN_NAM) AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_corp_aget_salary_info_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.18.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "AGET_SALARY_IDVS",
+          "field_key": "source.18.aget_salary_idvs",
+          "label": "当年代发工资人次",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "AGET_SALARY_AMTS",
+          "field_key": "source.18.aget_salary_amts",
+          "label": "当年代发工资总额（万元）",
+          "value_type": "DECIMAL",
+          "context": {
+            "unit": "TEN_THOUSAND"
+          }
+        }
+      ],
+      "limitations": [
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.19",
+      "title": "产品购买",
+      "dimension": "BANKING",
+      "sql": "SELECT CAST(s.SER_NO AS CHAR) AS record_id, COALESCE(NULLIF(s.CN_NAM,''),b.CN_NAM) AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_corp_ifm_info_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.19.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "CUST_NO",
+          "field_key": "source.19.cust_no",
+          "label": "对公客户号",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "FNCG_ENT_NAME",
+          "field_key": "source.19.fncg_ent_name",
+          "label": "理财持有人（企业名称）",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "RMB_CUST_IVST_CST",
+          "field_key": "source.19.rmb_cust_ivst_cst",
+          "label": "客户投资成本折人民币",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "RMB_CUR_NET_VAL_YER_AVRG",
+          "field_key": "source.19.rmb_cur_net_val_yer_avrg",
+          "label": "当前净值总额折人民币年日均",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "FNCG_LGL_NAME",
+          "field_key": "source.19.fncg_lgl_name",
+          "label": "理财持有人（法定代表人名称）",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "FNCG_LGL_RMB_CUST_IVST_CST",
+          "field_key": "source.19.fncg_lgl_rmb_cust_ivst_cst",
+          "label": "法定代表人投资成本折人民币",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "FNCG_LGL_RMB_CUR_NET_VAL_YER_AVRG",
+          "field_key": "source.19.fncg_lgl_rmb_cur_net_val_yer_avrg",
+          "label": "法定代表人当前净值总额折人民币年日均",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "FUND_ENT_NAME",
+          "field_key": "source.19.fund_ent_name",
+          "label": "基金持有人（企业名称）",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "FUND_ENT_RMB_NET_VAL_YEAR_AVRG",
+          "field_key": "source.19.fund_ent_rmb_net_val_year_avrg",
+          "label": "基金净值总额折人民币年日均",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "FUND_LGL_NAME",
+          "field_key": "source.19.fund_lgl_name",
+          "label": "基金持有人（法定代表人名称）",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "FUND_LGL_RMB_NET_VAL_YEAR_AVRG",
+          "field_key": "source.19.fund_lgl_rmb_net_val_year_avrg",
+          "label": "法定代表人基金净值总额折人民币年日均",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "INSR_ENT_NAME",
+          "field_key": "source.19.insr_ent_name",
+          "label": "保险持有人（企业名称）",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "YEAR_AVRG_DL_INSR_BAL",
+          "field_key": "source.19.year_avrg_dl_insr_bal",
+          "label": "当年日均保险余额折人民币 ( 含代理商业养老金 )",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "INSER_LGL_NAME",
+          "field_key": "source.19.inser_lgl_name",
+          "label": "保险持有人（法定代表人名称）",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "INSER_LGL_YEAR_AVRG_DL_INSR_BAL",
+          "field_key": "source.19.inser_lgl_year_avrg_dl_insr_bal",
+          "label": "法定代表人当年日均保险余额折人民币 ( 含代理商业养老金 )",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "BOND_ENT_NAME",
+          "field_key": "source.19.bond_ent_name",
+          "label": "国债持有人（企业名称）",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "NTNL_DEBT_BAL_YAVER",
+          "field_key": "source.19.ntnl_debt_bal_yaver",
+          "label": "国债余额年日均",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "BOND_LGL_NAME",
+          "field_key": "source.19.bond_lgl_name",
+          "label": "国债持有人（法定代表人名称）",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "BOND_LGL_NTNL_DEBT_BAL_YAVER",
+          "field_key": "source.19.bond_lgl_ntnl_debt_bal_yaver",
+          "label": "法定代表人国债余额年日均",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "GOLD_ENT_NAME",
+          "field_key": "source.19.gold_ent_name",
+          "label": "持有人（企业名称）",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "RMB_NMETAL_BAL_YAVER",
+          "field_key": "source.19.rmb_nmetal_bal_yaver",
+          "label": "贵金属余额年日均_折人民币",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "GOLD_LGL_NAME",
+          "field_key": "source.19.gold_lgl_name",
+          "label": "持有人（法定代表人名称）",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "GOLD_LGL_RMB_NMETAL_BAL_YAVER",
+          "field_key": "source.19.gold_lgl_rmb_nmetal_bal_yaver",
+          "label": "法定代表人贵金属余额年日均_折人民币",
+          "value_type": "DECIMAL"
+        }
+      ],
+      "limitations": [
+        "部分金额币种或单位未在表结构中定义，保持原值，不作跨口径计算",
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.20",
+      "title": "企业持有知识产权信息",
+      "dimension": "IP",
+      "sql": "SELECT CAST(s.SER_NO AS CHAR) AS record_id, COALESCE(NULLIF(s.CN_NAM,''),b.CN_NAM) AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_corp_gx_know_info_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.20.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "FLAG_TECH",
+          "field_key": "source.20.flag_tech",
+          "label": "科技企业资质",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "APPLICATION_NUMBER",
+          "field_key": "source.20.application_number",
+          "label": "专利申请号",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "PATENT_TYPE",
+          "field_key": "source.20.patent_type",
+          "label": "专利类型",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "PATENT_NAME",
+          "field_key": "source.20.patent_name",
+          "label": "专利名称",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "PATENTEE_ORI",
+          "field_key": "source.20.patentee_ori",
+          "label": "专利权人",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "LAST_LEGAL_STATUS",
+          "field_key": "source.20.last_legal_status",
+          "label": "最新法律状态",
+          "value_type": "TEXT"
+        }
+      ],
+      "limitations": [
+        "当前采用企业知识产权汇总来源，其他专利来源暂未合并，不能视为全部专利覆盖",
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    },
+    {
+      "group_key": "source.21",
+      "title": "在我行授用信情况",
+      "dimension": "CREDIT",
+      "sql": "SELECT CAST(s.SER_NO AS CHAR) AS record_id, COALESCE(NULLIF(s.CN_NAM,''),b.CN_NAM) AS enterprise_name, s.*, DATE_FORMAT(STR_TO_DATE(s.DATA_DAT,'%Y%m%d'),'%Y-%m-%dT00:00:00+08:00') AS source_date FROM `m_gud_mid_corp_cgl_info_sj` s LEFT JOIN `m_gud_mid_yer_phdc_corp_basic_sj` b ON b.UNIT_SOCL_CR_CD=s.UNIT_SOCL_CR_CD WHERE s.UNIT_SOCL_CR_CD=:credit_code ORDER BY record_id",
+      "fields": [
+        {
+          "column": "DATA_DAT",
+          "field_key": "source.21.data_dat",
+          "label": "数据日期",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "CUST_NO",
+          "field_key": "source.21.cust_no",
+          "label": "对公客户号",
+          "value_type": "TEXT"
+        },
+        {
+          "column": "TQOT",
+          "field_key": "source.21.tqot",
+          "label": "企业总额度",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "AVL_QUOT",
+          "field_key": "source.21.avl_quot",
+          "label": "企业可用额度",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "USG_QUOT",
+          "field_key": "source.21.usg_quot",
+          "label": "企业已用额度",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "LEG_TQOT",
+          "field_key": "source.21.leg_tqot",
+          "label": "企业主总额度",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "LEG_AVL_QUOT",
+          "field_key": "source.21.leg_avl_quot",
+          "label": "企业主可用额度",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "LEG_USG_QUOT",
+          "field_key": "source.21.leg_usg_quot",
+          "label": "企业主已用额度",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "LN_BAL",
+          "field_key": "source.21.ln_bal",
+          "label": "企业主贷款余额",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "PROD_BUS_LN_BAL",
+          "field_key": "source.21.prod_bus_ln_bal",
+          "label": "其中：企业主生产经营贷款",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "CMPHSV_AC_LN_BAL",
+          "field_key": "source.21.cmphsv_ac_ln_bal",
+          "label": "其中：企业主综合授信贷款",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "IDV_PLGE_LN_BAL",
+          "field_key": "source.21.idv_plge_ln_bal",
+          "label": "其中：企业主个人质押贷款",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "HOUSE_CUMP_LN_BAL",
+          "field_key": "source.21.house_cump_ln_bal",
+          "label": "其中：企业主住房消费贷款",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "COMC_HSE_LN_BAL",
+          "field_key": "source.21.comc_hse_ln_bal",
+          "label": "其中：企业主商用房贷款",
+          "value_type": "DECIMAL"
+        },
+        {
+          "column": "GENR_CUMP_LN_BAL",
+          "field_key": "source.21.genr_cump_ln_bal",
+          "label": "其中：企业主一般消费贷款",
+          "value_type": "DECIMAL"
+        }
+      ],
+      "limitations": [
+        "部分金额币种或单位未在表结构中定义，保持原值，不作跨口径计算",
+        "按信用代码保留源记录及数据日期；跨快照去重口径待确认"
+      ],
+      "data_time_column": "source_date",
+      "context_columns": {
+        "as_of": "source_date"
+      }
+    }
+  ]
+}

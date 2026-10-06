@@ -1,0 +1,332 @@
+{
+  "financial.f109": {
+    "label": "总资产",
+    "source_hint": "AST_SUM",
+    "blocked": false
+  },
+  "financial.f110": {
+    "label": "流动资产",
+    "source_hint": "LQDY_AST_SUM",
+    "blocked": false
+  },
+  "financial.f111": {
+    "label": "货币资金",
+    "source_hint": "CCY_FUD",
+    "blocked": false
+  },
+  "financial.f112": {
+    "label": "交易性金融资产",
+    "source_hint": "EXCG_FNCL_AST",
+    "blocked": false
+  },
+  "financial.f113": {
+    "label": "应收票据",
+    "source_hint": "REV_NOTE",
+    "blocked": false
+  },
+  "financial.f114": {
+    "label": "应收账款",
+    "source_hint": "RECVS",
+    "blocked": false
+  },
+  "financial.f115": {
+    "label": "预付款项",
+    "source_hint": "PLAN_FUD_ACCT",
+    "blocked": false
+  },
+  "financial.f116": {
+    "label": "其他应收款",
+    "source_hint": "OTH_RECVS",
+    "blocked": false
+  },
+  "financial.f117": {
+    "label": "存货",
+    "source_hint": "INVT",
+    "blocked": false
+  },
+  "financial.f118": {
+    "label": "一年内到期的非流动资产",
+    "source_hint": "LQ_YEAR_MATU_AST",
+    "blocked": false
+  },
+  "financial.f119": {
+    "label": "其他流动资产",
+    "source_hint": "OTH_LQDY_AST",
+    "blocked": false
+  },
+  "financial.f120": {
+    "label": "非流动资产",
+    "source_hint": "NON_LQDY_AST_SUM",
+    "blocked": false
+  },
+  "financial.f121": {
+    "label": "可供出售金融资产",
+    "source_hint": "AVL_SALE_FNCL_AST",
+    "blocked": false
+  },
+  "financial.f122": {
+    "label": "持有至到期投资",
+    "source_hint": "OWN_MATU_IVST",
+    "blocked": false
+  },
+  "financial.f123": {
+    "label": "长期应收款",
+    "source_hint": "LNG_RECVS",
+    "blocked": false
+  },
+  "financial.f124": {
+    "label": "长期股权投资",
+    "source_hint": "LNG_STK_EQU_IVST",
+    "blocked": false
+  },
+  "financial.f125": {
+    "label": "投资性房地产",
+    "source_hint": "IVST_RLEST",
+    "blocked": false
+  },
+  "financial.f126": {
+    "label": "固定资产",
+    "source_hint": "FIX_AST_SUM",
+    "blocked": false
+  },
+  "financial.f127": {
+    "label": "在建工程",
+    "source_hint": "UD_CONSTN",
+    "blocked": false
+  },
+  "financial.f128": {
+    "label": "生产性生物资产",
+    "source_hint": "PROD_GODS_AST",
+    "blocked": false
+  },
+  "financial.f129": {
+    "label": "油气资产",
+    "source_hint": "GAS_AST",
+    "blocked": false
+  },
+  "financial.f130": {
+    "label": "无形资产",
+    "source_hint": "INVI_AST",
+    "blocked": false
+  },
+  "financial.f131": {
+    "label": "开发支出",
+    "source_hint": "DVLP_DISB",
+    "blocked": false
+  },
+  "financial.f132": {
+    "label": "商誉",
+    "source_hint": "DLER_FITCH",
+    "blocked": false
+  },
+  "financial.f133": {
+    "label": "长期待摊费用",
+    "source_hint": "LNG_TBA_FEE_DLAY_AST",
+    "blocked": false
+  },
+  "financial.f134": {
+    "label": "递延所得税资产",
+    "source_hint": "DLAY_INCTX_AST",
+    "blocked": false
+  },
+  "financial.f135": {
+    "label": "其他非流动资产",
+    "source_hint": "OTH_NON_LQDY_AST",
+    "blocked": false
+  },
+  "financial.f136": {
+    "label": "总负债",
+    "source_hint": "DPS_SUM",
+    "blocked": false
+  },
+  "financial.f137": {
+    "label": "流动负债",
+    "source_hint": "LQDY_DPS_SUM",
+    "blocked": false
+  },
+  "financial.f138": {
+    "label": "短期借款",
+    "source_hint": "SHT_LN",
+    "blocked": false
+  },
+  "financial.f139": {
+    "label": "交易性金融负债",
+    "source_hint": "EXCG_FNCL_DPS",
+    "blocked": false
+  },
+  "financial.f140": {
+    "label": "应付票据",
+    "source_hint": "SHD_PAY_NOTE",
+    "blocked": false
+  },
+  "financial.f141": {
+    "label": "应付账款",
+    "source_hint": "PAYS",
+    "blocked": false
+  },
+  "financial.f142": {
+    "label": "预收款项",
+    "source_hint": "RESV_FUD_ACCT",
+    "blocked": false
+  },
+  "financial.f143": {
+    "label": "应付职工薪酬",
+    "source_hint": "SHD_PAY_STAF_SLRY",
+    "blocked": false
+  },
+  "financial.f144": {
+    "label": "应交税费",
+    "source_hint": "SHD_SETL_TAX",
+    "blocked": false
+  },
+  "financial.f145": {
+    "label": "其他应付款",
+    "source_hint": "OTH_SHD_PAY_FUD",
+    "blocked": false
+  },
+  "financial.f146": {
+    "label": "一年内到期的非流动负债",
+    "source_hint": "LQ_YEAR_MATU_DPS",
+    "blocked": false
+  },
+  "financial.f147": {
+    "label": "其他流动负债",
+    "source_hint": "OTH_LQDY_DPS",
+    "blocked": false
+  },
+  "financial.f148": {
+    "label": "非流动负债",
+    "source_hint": "NON_LQDY_DPS_SUM",
+    "blocked": false
+  },
+  "financial.f149": {
+    "label": "长期借款",
+    "source_hint": "LNG_LN",
+    "blocked": false
+  },
+  "financial.f150": {
+    "label": "应付债券",
+    "source_hint": "SHD_PAY_BOND",
+    "blocked": false
+  },
+  "financial.f151": {
+    "label": "长期应付款",
+    "source_hint": "LNG_PAYS",
+    "blocked": false
+  },
+  "financial.f152": {
+    "label": "预计负债",
+    "source_hint": "PLAN_DPS",
+    "blocked": false
+  },
+  "financial.f153": {
+    "label": "递延所得税负债",
+    "source_hint": "DLAY_INCTX_DPS",
+    "blocked": false
+  },
+  "financial.f154": {
+    "label": "其他非流动负债",
+    "source_hint": "OTH_NON_LQDY_DPS",
+    "blocked": false
+  },
+  "financial.f155": {
+    "label": "所有者权益（或股东权益）:",
+    "source_hint": "OWN_EQU_SUM",
+    "blocked": false
+  },
+  "financial.f156": {
+    "label": "实收资本（或股本）",
+    "source_hint": "ACT_RECV_CAP_STOCK",
+    "blocked": false
+  },
+  "financial.f157": {
+    "label": "资本公积",
+    "source_hint": "CAP_ACCM",
+    "blocked": false
+  },
+  "financial.f158": {
+    "label": "盈余公积",
+    "source_hint": "SPLS_ACCM",
+    "blocked": false
+  },
+  "financial.f159": {
+    "label": "未分配利润",
+    "source_hint": "NON_ALLO_PFT",
+    "blocked": false
+  },
+  "financial.f160": {
+    "label": "营业收入",
+    "source_hint": "PRMY_BINCM",
+    "blocked": true
+  },
+  "financial.f161": {
+    "label": "营业成本",
+    "source_hint": "PRMY_BUS_CST",
+    "blocked": true
+  },
+  "financial.f162": {
+    "label": "销售费用",
+    "source_hint": "SALE_FEE",
+    "blocked": false
+  },
+  "financial.f163": {
+    "label": "管理费用",
+    "source_hint": "SUPI_FEE",
+    "blocked": false
+  },
+  "financial.f164": {
+    "label": "财务费用",
+    "source_hint": "FNC_FEE",
+    "blocked": false
+  },
+  "financial.f165": {
+    "label": "投资收益",
+    "source_hint": "IVST_PFT_RECP_CSH",
+    "blocked": true
+  },
+  "financial.f166": {
+    "label": "资产处置收益",
+    "source_hint": "DPSE_FIX_INVI_OTH_AST_CSH",
+    "blocked": true
+  },
+  "financial.f167": {
+    "label": "营业利润",
+    "source_hint": "BUS_PFT",
+    "blocked": false
+  },
+  "financial.f168": {
+    "label": "营业外收入",
+    "source_hint": "暂未定位到对应字段",
+    "blocked": true
+  },
+  "financial.f169": {
+    "label": "营业外支出",
+    "source_hint": "暂未定位到对应字段",
+    "blocked": true
+  },
+  "financial.f170": {
+    "label": "净利润",
+    "source_hint": "NET_PFT",
+    "blocked": false
+  },
+  "financial.f171": {
+    "label": "现金净流量",
+    "source_hint": "NET_VAL_CSH_FLOW",
+    "blocked": false
+  },
+  "financial.f172": {
+    "label": "经营性现金净流量",
+    "source_hint": "ADMI_CSH_NET_VAL",
+    "blocked": false
+  },
+  "financial.f173": {
+    "label": "投资性现金净流量",
+    "source_hint": "IVST_CSH_NET_VAL",
+    "blocked": false
+  },
+  "financial.f174": {
+    "label": "筹资性现金净流量",
+    "source_hint": "PREP_CSH_NET_VAL",
+    "blocked": false
+  }
+}

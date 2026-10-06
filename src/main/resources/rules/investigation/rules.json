@@ -1,0 +1,205 @@
+{
+  "version": "REFERENCE-RULES-20260927",
+  "rules": [
+    {
+      "field_key": "calculated.C01",
+      "label": "股东人数",
+      "dimension": "PROFILE",
+      "engine_key": "rule.r215",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C02",
+      "label": "股东持股分布",
+      "dimension": "PROFILE",
+      "engine_key": "rule.r216",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C03",
+      "label": "各股东出质比例",
+      "dimension": "PROFILE",
+      "engine_key": "rule.r217",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C04",
+      "label": "企业整体出质比例",
+      "dimension": "PROFILE",
+      "engine_key": "rule.r218",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C05",
+      "label": "质权人数",
+      "dimension": "PROFILE",
+      "engine_key": "rule.r219",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C06",
+      "label": "最大质权人",
+      "dimension": "PROFILE",
+      "engine_key": "rule.r220",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C07",
+      "label": "最大质权人持有比例",
+      "dimension": "PROFILE",
+      "engine_key": "rule.r221",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C08",
+      "label": "近一年变更总次数",
+      "dimension": "PROFILE",
+      "engine_key": "rule.r222",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C09",
+      "label": "法定代表人变更次数",
+      "dimension": "PROFILE",
+      "engine_key": "rule.r223",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C10",
+      "label": "高管变更次数",
+      "dimension": "PROFILE",
+      "engine_key": "rule.r224",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C11",
+      "label": "注册地址变更次数",
+      "dimension": "PROFILE",
+      "engine_key": "rule.r225",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C12",
+      "label": "股权变更次数",
+      "dimension": "PROFILE",
+      "engine_key": "rule.r226",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C13",
+      "label": "实缴资本变更次数",
+      "dimension": "PROFILE",
+      "engine_key": "rule.r227",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C14",
+      "label": "最近变更日期",
+      "dimension": "PROFILE",
+      "engine_key": "rule.r228",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C15",
+      "label": "最近变更详情",
+      "dimension": "PROFILE",
+      "engine_key": "rule.r229",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C16",
+      "label": "企业贷款余额合计",
+      "dimension": "CREDIT",
+      "engine_key": "rule.r235",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C17",
+      "label": "流动资金贷款余额",
+      "dimension": "CREDIT",
+      "engine_key": "rule.r236",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C18",
+      "label": "流动资金贷款占比",
+      "dimension": "CREDIT",
+      "engine_key": "rule.r237",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C19",
+      "label": "信用贷款余额",
+      "dimension": "CREDIT",
+      "engine_key": "rule.r238",
+      "approved": false,
+      "show_reference": false
+    },
+    {
+      "field_key": "calculated.C20",
+      "label": "信用贷款占比",
+      "dimension": "CREDIT",
+      "engine_key": "rule.r239",
+      "approved": false,
+      "show_reference": false
+    },
+    {
+      "field_key": "calculated.C21",
+      "label": "最大单笔用信机构",
+      "dimension": "CREDIT",
+      "engine_key": "rule.r240",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C22",
+      "label": "是否存在关注或更差分类（非逾期判定）",
+      "dimension": "CREDIT",
+      "engine_key": "rule.r241",
+      "approved": false,
+      "show_reference": false
+    },
+    {
+      "field_key": "calculated.C23",
+      "label": "关注或更差分类余额（非逾期余额）",
+      "dimension": "CREDIT",
+      "engine_key": "rule.r242",
+      "approved": false,
+      "show_reference": false
+    },
+    {
+      "field_key": "calculated.C24",
+      "label": "近三年纳税信用级别",
+      "dimension": "OPERATIONS",
+      "engine_key": "rule.r094",
+      "approved": false,
+      "show_reference": true
+    },
+    {
+      "field_key": "calculated.C25",
+      "label": "企业有效专利质押登记（专利号待核对）",
+      "dimension": "IP",
+      "engine_key": "rule.r212",
+      "approved": false,
+      "show_reference": false
+    }
+  ]
+}

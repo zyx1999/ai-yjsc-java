@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    # 数据库连接配置继承 application.yml。
+    # 当前库已有应用表，启动不自动建表或初始化演示数据。
+    initialization-mode: never
+diligence:
+  demo:
+    seed-session: false
+  source:
+    adapter: mysql
+  security:
+    dev-user: ${DEV_USER_ID:local-user}
