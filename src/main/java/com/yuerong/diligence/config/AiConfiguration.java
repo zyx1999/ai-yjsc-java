@@ -19,7 +19,7 @@ public class AiConfiguration {
       @Value("${diligence.platform.debug-trace:true}") boolean debugTrace) {
     switch (adapter) {
       case "agent-service":
-        return new AgentServiceAdapter(url, headers, timeout, debugTrace);
+        return new AgentServiceAdapter(url, filesUrl, headers, timeout, debugTrace);
       case "oneagent":
         return new BankOneAgentAdapter(url, filesUrl, headers, timeout, debugTrace);
       default:

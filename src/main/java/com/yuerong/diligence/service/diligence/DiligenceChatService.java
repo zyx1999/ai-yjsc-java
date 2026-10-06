@@ -6,6 +6,7 @@ import com.yuerong.diligence.ai.port.AgentPort;
 import com.yuerong.diligence.common.*;
 import com.yuerong.diligence.common.stream.*;
 import java.io.IOException;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,58 @@ public class DiligenceChatService {
   public DiligenceChatService(DiligenceService biz, FilesService files, AgentPort agent,
       @Value("${diligence.platform.namespace:v2}") String namespace) {
     this.biz = biz; this.files = files; this.agent = agent; this.namespace = namespace;
+  }
+
+  /**
+   * 会话文件列表：平台工作区文件（含模型新建/输出）与后端登记材料合并，同名以平台条目为准；
+   * 平台文件能力不可用时仅返回后端材料。
+   */
+  public ObjectNode files(String task, String user) {
+    ObjectNode session = biz.session(task, user);
+    Map<String, ObjectNode> merged = new LinkedHashMap<>();
+    for (ObjectNode file : biz.store.list("file", task)) {
+      String name = file.path("name").asText("");
+      if (name.isEmpty()) continue;
+      merged.put(
+          name,
+          Json.obj(
+              "name", name,
+              "size", file.path("size").asLong(),
+              "source", "local",
+              "file_id", file.path("file_id").asText("")));
+    }
+    boolean platformAvailable = false;
+    String platformError = null;
+    String platformSession =
+        session.path("platform_sessions").path(agent.provider() + ":" + namespace).asText("");
+    if (!platformSession.isEmpty()) {
+      try {
+        JsonNode listed = agent.files(platformSession);
+        if (listed != null && listed.isArray()) {
+          platformAvailable = true;
+          for (JsonNode file : listed) {
+            String name = file.path("name").asText("");
+            if (name.isEmpty()) continue;
+            ObjectNode entry = merged.get(name);
+            if (entry == null) entry = Json.obj("name", name, "file_id", "");
+            entry.put("size", file.path("size").asLong());
+            entry.put("source", "platform");
+            entry.put("path", file.path("path").asText(name));
+            merged.put(name, entry);
+          }
+        }
+      } catch (Fault error) {
+        platformError = error.getMessage();
+      }
+    }
+    ArrayNode out = Json.arr();
+    for (ObjectNode entry : merged.values()) out.add(entry);
+    return biz.contracts.response(
+        Json.obj(
+            "task_id", task,
+            "platform_available", platformAvailable,
+            "platform_error", platformError,
+            "files", out));
   }
 
   public EventStreamTask prepare(String task, String user, JsonNode body) {

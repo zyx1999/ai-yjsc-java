@@ -14,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.*;
 import org.springframework.transaction.PlatformTransactionManager;
 import static org.mockito.Mockito.*;
@@ -43,6 +44,8 @@ class MvcWiringTest {
   @MockBean ModelInferencePort model;
   @BeforeEach void configureAgent(){
     when(agent.provider()).thenReturn("fixture");when(agent.initialSession()).thenReturn("fixture-session");
+    when(agent.fileCapable()).thenReturn(true);
+    when(agent.uploadFile(any(),any(),any())).thenAnswer(call->call.getArgument(1));
     when(agent.chat(any())).thenAnswer(call->{AgentRequest req=call.getArgument(0);return Json.obj("session_id",req.session,"answer","测试回答");});
   }
   String create() throws Exception {
@@ -51,6 +54,9 @@ class MvcWiringTest {
   }
   @Test void routesSessionsGatewayAndCatalogThroughServices() throws Exception {
     String task=create();assertFalse(task.isEmpty());
+    mvc.perform(get("/api/v1/diligence/sessions/"+task+"/chat/files")).andExpect(status().isOk())
+        .andExpect(jsonPath("$.status").value("SUCCEEDED"))
+        .andExpect(jsonPath("$.data.files").isArray());
     mvc.perform(get("/api/v1/diligence/catalog")).andExpect(status().isOk());
     mvc.perform(post("/api/v1/diligence/enterprise/resolve").contentType("application/json")
         .content(Json.obj("task_id",task,"arguments",Json.obj("credit_code","91310000MA00000001")).toString()))
@@ -75,5 +81,32 @@ class MvcWiringTest {
         .andExpect(jsonPath("$.data.messages[1].text").value("测试回答"));
     mvc.perform(post("/api/v1/diligence/sessions/"+task+"/chat/events")
         .contentType("application/json").content("{\"text\":\" \"}")).andExpect(status().isBadRequest());
+  }
+  @Test void analysisRoutesCreateUploadChatAndPersist() throws Exception {
+    String task=Json.parse(mvc.perform(post("/api/v1/analysis/sessions"))
+        .andExpect(status().isOk()).andReturn().getResponse().getContentAsString())
+        .at("/data/task_id").asText();
+    assertFalse(task.isEmpty());
+    String fileId=Json.parse(mvc.perform(multipart("/api/v1/analysis/sessions/"+task+"/files")
+        .file(new MockMultipartFile("file","征信.pdf","application/pdf","demo".getBytes())))
+        .andExpect(status().isOk()).andReturn().getResponse().getContentAsString())
+        .at("/data/file_id").asText();
+    assertFalse(fileId.isEmpty());
+    MvcResult pending=mvc.perform(post("/api/v1/analysis/sessions/"+task+"/chat/events")
+        .contentType("application/json")
+        .content(Json.obj("text","分析个人征信","attachment_ids",Json.arr(fileId)).toString()))
+        .andExpect(request().asyncStarted()).andReturn();
+    pending.getAsyncResult(4000);
+    mvc.perform(asyncDispatch(pending)).andExpect(status().isOk())
+        .andExpect(content().string(containsString("event:answer.completed")))
+        .andExpect(content().string(containsString("event:run.completed")));
+    mvc.perform(get("/api/v1/analysis/sessions/"+task)).andExpect(status().isOk())
+        .andExpect(jsonPath("$.data.messages[1].content").value("测试回答"))
+        .andExpect(jsonPath("$.data.messages[0].role").value("USER"));
+    mvc.perform(get("/api/v1/analysis/sessions/"+task+"/files")).andExpect(status().isOk())
+        .andExpect(jsonPath("$.data.platform_available").value(false))
+        .andExpect(jsonPath("$.data.files[0].name").value("征信.pdf"))
+        .andExpect(jsonPath("$.data.files[0].source").value("local"));
+    mvc.perform(get("/api/v1/analysis/sessions/missing-task")).andExpect(status().isNotFound());
   }
 }

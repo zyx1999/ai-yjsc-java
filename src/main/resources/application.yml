@@ -7,8 +7,8 @@ spring:
     active: local
   servlet:
     multipart:
-      max-file-size: 10MB
-      max-request-size: 11MB
+      max-file-size: 20MB
+      max-request-size: 22MB
   datasource:
     # MySQL；在对应环境的配置文件中填写连接地址、用户名和密码。
     url: 'jdbc:mysql://rm-bp1mob28eb4knb6zi9o.mysql.rds.aliyuncs.com:3306/yuerong?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai'
@@ -50,6 +50,10 @@ diligence:
     trusted-user-header: false
   files:
     root: ./storage/diligence
+# 征信/流水分析窗口（文答）：平台会话命名空间，与尽调会话隔离；材料文件与尽调共用 diligence.files.root。
+analysis:
+  platform:
+    namespace: analysis
 logging:
   level:
     com.yuerong.diligence.diagnostics: INFO

@@ -58,4 +58,41 @@ class BankOneAgentAdapterTest {
                     .chat(DiligenceAgentContext.request("s", "u", "你好", "task-1", Json.obj("file_id", "f1", "role", "FINANCIAL"))));
     assertEquals("INVALID_ARGUMENT", fault.code);
   }
+
+  @Test
+  void platformPathAttachmentSkipsContentAndProceedsToExchange() {
+    // 已有平台工作区路径时不再要求本地字节，直接进入平台交互（此处因未配置地址而失败）。
+    Fault fault =
+        assertThrows(
+            Fault.class,
+            () ->
+                adapter()
+                    .chat(
+                        DiligenceAgentContext.request(
+                            "s", "u", "你好", "task-1",
+                            Json.obj("file_id", "f1", "name", "征信.pdf", "platform_path", "征信.pdf"))));
+    assertEquals("PLATFORM_NOT_CONFIGURED", fault.code);
+  }
+
+  @Test
+  void fileCapabilityFollowsFilesAddress() {
+    assertTrue(new BankOneAgentAdapter("https://host/api/v1/message", "", "{}", 1000).fileCapable());
+    assertFalse(adapter().fileCapable());
+    Fault fault =
+        assertThrows(Fault.class, () -> adapter().uploadFile("s", "a.pdf", "x".getBytes()));
+    assertEquals("PLATFORM_NOT_CONFIGURED", fault.code);
+  }
+
+  @Test
+  void attachmentReferenceKeepsBothFormats() {
+    assertEquals(
+        "\n\n[附件已上传] 文件名：a.pdf，会话相对路径：a.pdf。请先读取该文件，再继续处理。",
+        BankOneAgentAdapter.attachmentReference("a.pdf", "a.pdf", ""));
+    assertEquals(
+        "\n\n[附件已上传] 文件名：a.pdf，会话相对路径：a.pdf。请调用 skill。",
+        BankOneAgentAdapter.attachmentReference("a.pdf", "a.pdf", "请调用 skill。"));
+    assertEquals(
+        "\n\n【用户上传附件】文件名：a.pdf，工作区相对路径：a.pdf。请在需要时读取该文件。",
+        BankOneAgentAdapter.attachmentReference("a.pdf", "a.pdf", "", "user_upload"));
+  }
 }

@@ -20,4 +20,9 @@ public class ChatController {
   public SseEmitter events(@PathVariable String task, @RequestBody JsonNode body) {
     return streams.open(chat.prepare(task, access.user(), body));
   }
+
+  @GetMapping("/api/v1/diligence/sessions/{task}/chat/files")
+  public JsonNode files(@PathVariable String task) {
+    return chat.files(task, access.user());
+  }
 }

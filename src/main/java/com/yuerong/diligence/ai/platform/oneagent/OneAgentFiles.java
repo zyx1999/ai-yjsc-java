@@ -6,6 +6,7 @@ import com.yuerong.diligence.common.Fault;
 import com.yuerong.diligence.common.Json;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
@@ -41,6 +42,11 @@ public class OneAgentFiles {
     return messageUrl.substring(0, messageUrl.length() - suffix.length()) + "/files";
   }
 
+  /** 是否已配置可用的文件接口地址。 */
+  public boolean configured() {
+    return !base.isEmpty();
+  }
+
   /** 上传附件，返回平台返回的会话内相对路径。 */
   public String upload(String sessionId, String name, byte[] content) {
     long started = System.nanoTime();
@@ -56,6 +62,41 @@ public class OneAgentFiles {
       } catch (RuntimeException error) {
         Diagnostics.failure("agent.file_upload_failed", error, "elapsed_ms", Diagnostics.elapsed(started)); throw error;
       }
+    }
+  }
+
+  /** 列举会话 Workspace 根目录文件（平台 files/list）。 */
+  public ObjectNode list(String sessionId) {
+    if (base.isEmpty())
+      throw new Fault("PLATFORM_NOT_CONFIGURED", "尚未配置平台文件接口地址", 503);
+    if (sessionId == null || sessionId.isEmpty())
+      throw new Fault("INVALID_ARGUMENT", "缺少平台会话标识");
+    HttpURLConnection c = null;
+    try {
+      String encoded = java.net.URLEncoder.encode(sessionId, "UTF-8");
+      URL target = new URL(base + "/list?sessionId=" + encoded);
+      if (!java.util.Arrays.asList("http", "https").contains(target.getProtocol())
+          || target.getUserInfo() != null)
+        throw new Fault("CONFIG_INVALID", "平台文件接口地址无效", 503);
+      c = (HttpURLConnection) target.openConnection();
+      c.setInstanceFollowRedirects(false);
+      c.setConnectTimeout(5000);
+      c.setReadTimeout(timeout);
+      c.setRequestMethod("GET");
+      PlatformHttp.applyHeaders(c, headerJson);
+      Diagnostics.info("agent.file_list_response", "http_status", c.getResponseCode());
+      if (c.getResponseCode() != 200)
+        throw new Fault("PLATFORM_FILE_ERROR", "平台文件列表查询失败，请稍后重试", 502);
+      JsonNode response =
+          Json.parse(new String(readLimited(c.getInputStream()), StandardCharsets.UTF_8));
+      JsonNode files = response.path("files");
+      if (!files.isArray())
+        throw new Fault("PLATFORM_PROTOCOL_ERROR", "平台文件列表响应无效", 502);
+      return Json.obj("files", files.deepCopy());
+    } catch (IOException e) {
+      throw new Fault("PLATFORM_FILE_ERROR", "平台文件列表查询未完成", 502, e);
+    } finally {
+      if (c != null) c.disconnect();
     }
   }
 
