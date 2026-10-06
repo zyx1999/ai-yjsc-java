@@ -22,13 +22,25 @@ public class AnalysisController {
   }
 
   @PostMapping("/api/v1/analysis/sessions")
-  public JsonNode create() {
-    return analysis.create(access.user());
+  public JsonNode create(@RequestBody(required = false) JsonNode body) {
+    return analysis.create(access.user(), body);
+  }
+
+  /** 历史会话列表（kind=credit/bankflow 区分窗口；同用户隔离）。 */
+  @GetMapping("/api/v1/analysis/sessions")
+  public JsonNode sessions(
+      @RequestParam(value = "kind", required = false, defaultValue = "") String kind) {
+    return analysis.list(access.user(), kind);
   }
 
   @GetMapping("/api/v1/analysis/sessions/{task}")
   public JsonNode session(@PathVariable String task) {
     return analysis.session(access.user(), task);
+  }
+
+  @DeleteMapping("/api/v1/analysis/sessions/{task}")
+  public JsonNode delete(@PathVariable String task) {
+    return analysis.delete(access.user(), task);
   }
 
   @GetMapping("/api/v1/analysis/sessions/{task}/files")

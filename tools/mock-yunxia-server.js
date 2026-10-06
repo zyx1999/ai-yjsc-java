@@ -11,7 +11,7 @@
  *   - DELETE {任意前缀}/api/v1/files
  *
  * 用法：
- *   node tools/mock-yunxia-server.js [--port 18784] [--delay 300] [--slow-seconds 3] [--hang-seconds 20]
+ *   node tools/mock-yunxia-server.js [--port 18784] [--delay 300] [--slow-seconds 3] [--hang-seconds 20] [--pending-seconds 120] [--heartbeat-seconds 5]
  *
  * 后端对接（tyy/backend）：
  *   # 默认 application.yml 已指向 18784，无需改动即可直接联调：
@@ -28,6 +28,9 @@
  *   断流                 → start 后直接断开（验证客户端“结果未知”）
  *   超时                 → start 后挂起不发送（验证客户端读取超时；可配合调小 diligence.platform.timeout-ms）
  *   慢                   → message 前等待 --slow-seconds 秒（验证长耗时链路）
+ *   挂起 / pending       → 保持连接 pending（每 --heartbeat-seconds 秒发心跳帧），
+ *                          持续 --pending-seconds 秒后正常返回结果
+ *                          （验证前端长时间“events pending”时页面不卡死、结束后正常渲染）
  */
 'use strict'
 
@@ -44,6 +47,9 @@ const PORT = parseInt(argValue('--port', '18784'), 10)
 const BASE_DELAY_MS = parseInt(argValue('--delay', '300'), 10)
 const SLOW_SECONDS = parseInt(argValue('--slow-seconds', '3'), 10)
 const HANG_SECONDS = parseInt(argValue('--hang-seconds', '20'), 10)
+/** 挂起场景总时长与心跳间隔（默认 120s / 5s）：保持连接 pending 后正常返回。 */
+const PENDING_SECONDS = parseInt(argValue('--pending-seconds', '120'), 10)
+const HEARTBEAT_SECONDS = parseInt(argValue('--heartbeat-seconds', '5'), 10)
 
 /** sessionId -> Map(相对路径 -> {name, size, content})，模拟平台会话 Workspace */
 const workspaces = new Map()
@@ -176,6 +182,40 @@ async function handleMessage (req, res) {
   if (txt.indexOf('超时') >= 0) {
     log('  -> 场景：挂起 ' + HANG_SECONDS + 's（验证客户端读取超时）')
     setTimeout(function () { try { res.destroy() } catch (ignored) {} }, HANG_SECONDS * 1000)
+    return
+  }
+
+  // 场景：挂起（模拟平台长时间处理：保持连接 pending + 周期心跳；到时后正常返回成功结果）
+  if (txt.indexOf('挂起') >= 0 || /pending/i.test(txt)) {
+    log('  -> 场景：挂起 pending ' + PENDING_SECONDS + 's（心跳 ' + HEARTBEAT_SECONDS + 's；连接保持，客户端持续“events pending”）')
+    let heartbeatSeq = 10
+    const heartbeat = setInterval(function () {
+      heartbeatSeq += 1
+      sse(res, 'progress', JSON.stringify({
+        type: 'heartbeat', seq: heartbeatSeq, title: '模型处理中',
+        message: '大模型仍在分析（Mock 心跳）', session_id: sessionId, request_id: requestId
+      }))
+      log('  -> 心跳#' + heartbeatSeq + '（连接保持 pending）')
+    }, HEARTBEAT_SECONDS * 1000)
+    const finish = setTimeout(function () {
+      clearInterval(heartbeat)
+      const answer = buildAnswer(txt)
+      log('  -> 挂起结束，正常返回结果')
+      sse(res, 'message', JSON.stringify({
+        ok: true, status: 'completed', intent_code: null, message: answer,
+        errorCode: null, raw: answer
+      }))
+      if (debugTrace) {
+        try { sendTraceFrame(res, sessionId, requestId, txt, turnId) } catch (ignored) {}
+      }
+      sse(res, 'done', '"[DONE]"')
+      res.end()
+    }, PENDING_SECONDS * 1000)
+    res.on('close', function () {
+      clearInterval(heartbeat)
+      clearTimeout(finish)
+      log('  -> 客户端断开，挂起场景定时器已清理')
+    })
     return
   }
 
@@ -417,6 +457,6 @@ server.listen(PORT, '127.0.0.1', function () {
   log('行内平台 Mock 服务已启动（零依赖，Node ' + process.version + '）')
   log('  message  : POST   http://127.0.0.1:' + PORT + '/api/v1/message')
   log('  files    : POST/GET/DELETE http://127.0.0.1:' + PORT + '/api/v1/files[/upload|/list|/content]')
-  log('  场景关键词: 尽调 / 敏感 / 限流 / 断流 / 超时 / 慢')
+  log('  场景关键词: 尽调 / 敏感 / 限流 / 断流 / 超时 / 慢 / 挂起(pending)')
   log('  后端对接: diligence.platform.url=http://127.0.0.1:' + PORT + '/api/v1/message（application.yml 默认已指向本端口）')
 })

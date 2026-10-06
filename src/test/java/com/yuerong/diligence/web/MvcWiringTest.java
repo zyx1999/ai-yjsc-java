@@ -83,7 +83,8 @@ class MvcWiringTest {
         .contentType("application/json").content("{\"text\":\" \"}")).andExpect(status().isBadRequest());
   }
   @Test void analysisRoutesCreateUploadChatAndPersist() throws Exception {
-    String task=Json.parse(mvc.perform(post("/api/v1/analysis/sessions"))
+    String task=Json.parse(mvc.perform(post("/api/v1/analysis/sessions")
+        .contentType("application/json").content("{\"kind\":\"credit\"}"))
         .andExpect(status().isOk()).andReturn().getResponse().getContentAsString())
         .at("/data/task_id").asText();
     assertFalse(task.isEmpty());
@@ -107,6 +108,17 @@ class MvcWiringTest {
         .andExpect(jsonPath("$.data.platform_available").value(false))
         .andExpect(jsonPath("$.data.files[0].name").value("征信.pdf"))
         .andExpect(jsonPath("$.data.files[0].source").value("local"));
+    mvc.perform(get("/api/v1/analysis/sessions").param("kind","credit")).andExpect(status().isOk())
+        .andExpect(jsonPath("$.data.sessions[0].task_id").value(task))
+        .andExpect(jsonPath("$.data.sessions[0].kind").value("credit"))
+        .andExpect(jsonPath("$.data.sessions[0].message_count").value(2));
+    mvc.perform(get("/api/v1/analysis/sessions").param("kind","bankflow")).andExpect(status().isOk())
+        .andExpect(jsonPath("$.data.sessions").isEmpty());
     mvc.perform(get("/api/v1/analysis/sessions/missing-task")).andExpect(status().isNotFound());
+    mvc.perform(delete("/api/v1/analysis/sessions/"+task)).andExpect(status().isOk())
+        .andExpect(jsonPath("$.data.deleted").value(true));
+    mvc.perform(get("/api/v1/analysis/sessions/"+task)).andExpect(status().isNotFound());
+    mvc.perform(get("/api/v1/analysis/sessions").param("kind","credit")).andExpect(status().isOk())
+        .andExpect(jsonPath("$.data.sessions").isEmpty());
   }
 }

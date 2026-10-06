@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,7 @@ public class AnalysisService {
   private static final String FILE_KIND = "analysis-file";
   private static final int MAX_TEXT_CHARS = 12000;
   private static final int MAX_ATTACHMENTS = 5;
+  private static final int HISTORY_LIMIT = 50;
   private static final long MAX_FILE_BYTES = 20L * 1024 * 1024;
 
   private final ApplicationStorePort store;
@@ -64,6 +66,14 @@ public class AnalysisService {
   // ---------- 会话 ----------
 
   public ObjectNode create(String user) {
+    return create(user, null);
+  }
+
+  /** 新建会话；body.kind 区分窗口场景（credit=征信 / bankflow=流水），供历史列表过滤。 */
+  public ObjectNode create(String user, JsonNode body) {
+    String kind = body == null ? "" : body.path("kind").asText("").trim();
+    if (!kind.isEmpty() && !kind.matches("[A-Za-z0-9_-]{1,32}"))
+      throw new Fault("INVALID_ARGUMENT", "会话类型无效", 400);
     String id = Json.id();
     ObjectNode session =
         Json.obj(
@@ -71,6 +81,8 @@ public class AnalysisService {
             id,
             "owner",
             user,
+            "kind",
+            kind,
             "title",
             "新会话",
             "running",
@@ -91,6 +103,39 @@ public class AnalysisService {
 
   public ObjectNode session(String user, String task) {
     return contracts.response(dto(owned(user, task)));
+  }
+
+  /** 当前用户的历史会话（按 kind 过滤，最近使用在前，最多 50 条）。 */
+  public ObjectNode list(String user, String kind) {
+    String filter = kind == null ? "" : kind.trim();
+    List<ObjectNode> visible = new ArrayList<>();
+    for (ObjectNode s : store.list(SESSION_KIND, user)) {
+      if (s.path("deleted").asBoolean()) continue;
+      if (!filter.isEmpty() && !filter.equals(s.path("kind").asText(""))) continue;
+      visible.add(s);
+    }
+    visible.sort(Comparator.comparing(AnalysisService::lastUsed).reversed());
+    ArrayNode out = Json.arr();
+    for (ObjectNode s : visible) {
+      if (out.size() >= HISTORY_LIMIT) break;
+      out.add(summary(s));
+    }
+    return contracts.response(Json.obj("sessions", out));
+  }
+
+  /** 软删除会话：历史列表不再展示；运行中的会话不允许删除。 */
+  public ObjectNode delete(String user, String task) {
+    owned(user, task);
+    store.update(
+        SESSION_KIND,
+        task,
+        s -> {
+          if (s.path("running").asBoolean())
+            throw new Fault("RUN_BUSY", "分析运行中，请完成后再删除会话", 409);
+          s.put("deleted", true);
+          return s;
+        });
+    return contracts.response(Json.obj("task_id", task, "deleted", true));
   }
 
   /**
@@ -257,7 +302,14 @@ public class AnalysisService {
             s.put("running", true);
             s.put("run_id", runId);
             if (s.path("messages").isEmpty()) s.put("title", title(text));
-            ((ArrayNode) s.get("messages")).add(message("USER", text, "SUCCEEDED", runId, null));
+            ObjectNode userMessage = message("USER", text, "SUCCEEDED", runId, null);
+            if (!attachments.isEmpty()) {
+              ArrayNode names = Json.arr();
+              for (ObjectNode file : attachments) names.add(file.path("name").asText(""));
+              // 记录本轮引用的材料名称，历史会话回放时可展示“我上传的文件”。
+              userMessage.set("files", names);
+            }
+            ((ArrayNode) s.get("messages")).add(userMessage);
             return touch(s);
           });
       running = true;
@@ -362,7 +414,8 @@ public class AnalysisService {
 
   ObjectNode internal(String task) {
     ObjectNode s = store.get(SESSION_KIND, task);
-    if (s == null) throw new Fault("NOT_FOUND", "会话不存在", 404);
+    if (s == null || s.path("deleted").asBoolean())
+      throw new Fault("NOT_FOUND", "会话不存在", 404);
     return s;
   }
 
@@ -512,11 +565,42 @@ public class AnalysisService {
     return s;
   }
 
+  private static java.time.Instant lastUsed(ObjectNode s) {
+    try {
+      String value = s.path("last_used_at").asText("");
+      return value.isEmpty() ? java.time.Instant.EPOCH : java.time.Instant.parse(value);
+    } catch (RuntimeException ignored) {
+      return java.time.Instant.EPOCH;
+    }
+  }
+
+  private static ObjectNode summary(ObjectNode s) {
+    ObjectNode out =
+        Json.obj(
+            "task_id",
+            s.path("task_id").asText(),
+            "kind",
+            s.path("kind").asText(""),
+            "title",
+            s.path("title").asText(""),
+            "running",
+            s.path("running").asBoolean(),
+            "unknown_run",
+            s.path("unknown_run").asBoolean(),
+            "message_count",
+            s.path("messages").size());
+    out.put("created_at", s.path("created_at").asText(""));
+    out.put("last_used_at", s.path("last_used_at").asText(""));
+    return out;
+  }
+
   private ObjectNode dto(ObjectNode s) {
     ObjectNode out =
         Json.obj(
             "task_id",
             s.path("task_id").asText(),
+            "kind",
+            s.path("kind").asText(""),
             "title",
             s.path("title").asText(),
             "running",

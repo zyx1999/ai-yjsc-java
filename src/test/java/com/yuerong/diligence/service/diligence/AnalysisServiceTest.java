@@ -225,4 +225,76 @@ class AnalysisServiceTest {
     assertEquals("FAILED", messages.get(0).path("status").asText());
     assertEquals("RUN_BUSY", messages.get(0).path("code").asText());
   }
+
+  @Test void historyListsByKindAndOwner() throws Exception {
+    String credit = analysis.create("owner", Json.obj("kind", "credit")).at("/data/task_id").asText();
+    String bankflow = analysis.create("owner", Json.obj("kind", "bankflow")).at("/data/task_id").asText();
+    String foreign = analysis.create("intruder", Json.obj("kind", "credit")).at("/data/task_id").asText();
+    assertEquals("credit", analysis.session("owner", credit).at("/data/kind").asText());
+
+    JsonNode sessions = analysis.list("owner", "credit").at("/data/sessions");
+    assertEquals(1, sessions.size());
+    assertEquals(credit, sessions.get(0).path("task_id").asText());
+    assertEquals("credit", sessions.get(0).path("kind").asText());
+    assertEquals("新会话", sessions.get(0).path("title").asText());
+    assertEquals(0, sessions.get(0).path("message_count").asInt());
+
+    assertEquals(3, analysis.list("owner", "").at("/data/sessions").size());
+    assertEquals(1, analysis.list("owner", "bankflow").at("/data/sessions").size());
+    assertEquals(bankflow, analysis.list("owner", "bankflow").at("/data/sessions/0/task_id").asText());
+    assertEquals(1, analysis.list("intruder", "credit").at("/data/sessions").size());
+    assertEquals(foreign, analysis.list("intruder", "credit").at("/data/sessions/0/task_id").asText());
+    Fault invalid =
+        assertThrows(Fault.class, () -> analysis.create("owner", Json.obj("kind", "非法 类型")));
+    assertEquals("INVALID_ARGUMENT", invalid.code);
+  }
+
+  @Test void historySortsByLastUsedAndMarksTitles() throws Exception {
+    String older = analysis.create("owner", Json.obj("kind", "credit")).at("/data/task_id").asText();
+    String newer = analysis.create("owner", Json.obj("kind", "credit")).at("/data/task_id").asText();
+    // 旧会话产生一次对话后 last_used_at 更新，应排在最前。
+    execute(analysis.prepare(older, "owner", Json.obj("text", "陈国雄个人征信分析")));
+    JsonNode sessions = analysis.list("owner", "credit").at("/data/sessions");
+    assertEquals(2, sessions.size());
+    assertEquals(older, sessions.get(0).path("task_id").asText());
+    assertEquals("陈国雄个人征信分析", sessions.get(0).path("title").asText());
+    assertEquals(2, sessions.get(0).path("message_count").asInt());
+    assertEquals(newer, sessions.get(1).path("task_id").asText());
+  }
+
+  @Test void deleteHidesSessionAndGuardsRunning() throws Exception {
+    store.update(
+        "analysis-session",
+        task,
+        s -> {
+          s.put("running", true);
+          return s;
+        });
+    Fault busy = assertThrows(Fault.class, () -> analysis.delete("owner", task));
+    assertEquals("RUN_BUSY", busy.code);
+    store.update(
+        "analysis-session",
+        task,
+        s -> {
+          s.put("running", false);
+          return s;
+        });
+
+    analysis.delete("owner", task);
+    assertEquals(0, analysis.list("owner", "").at("/data/sessions").size());
+    Fault missing = assertThrows(Fault.class, () -> analysis.session("owner", task));
+    assertEquals("NOT_FOUND", missing.code);
+    Fault again = assertThrows(Fault.class, () -> analysis.delete("owner", task));
+    assertEquals("NOT_FOUND", again.code);
+  }
+
+  @Test void userMessageKeepsAttachmentNamesForReplay() throws Exception {
+    String fileId =
+        analysis.upload("owner", task, "陈国雄个人征信.pdf", "report".getBytes()).at("/data/file_id").asText();
+    execute(analysis.prepare(task, "owner", Json.obj("text", "分析征信", "attachment_ids", Json.arr(fileId))));
+    JsonNode userMessage = analysis.session("owner", task).at("/data/messages/0");
+    assertEquals("USER", userMessage.path("role").asText());
+    assertEquals(1, userMessage.path("files").size());
+    assertEquals("陈国雄个人征信.pdf", userMessage.at("/files/0").asText());
+  }
 }
